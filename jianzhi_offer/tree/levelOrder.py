@@ -1,4 +1,4 @@
-from jianzhi_offer.tree.common import *
+from common.treeCommon import *
 
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:

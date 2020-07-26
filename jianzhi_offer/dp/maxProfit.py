@@ -3,12 +3,17 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        cost = -prices[0]
+        if len(prices) == 0:
+            return 0
+        buy_in_price = -prices[0]
         dp = [0] * len(prices)
         for i in range(1, len(prices)):
-            print(prices[i])
-            dp[i] = max(cost+prices[i], -prices[i])
+            if -prices[i] > buy_in_price:
+                buy_in_price = -prices[i]
+            else:
+                dp[i] = buy_in_price + prices[i]
+        print(max(dp))
+        return max(dp)
 
-
-arr = [7,1,5,3,6,4]
+arr = [1,6,4,3,1]
 Solution().maxProfit(arr)

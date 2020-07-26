@@ -1,4 +1,4 @@
-from jianzhi_offer.tree.common import *
+from common.treeCommon import *
 
 # 验证二叉搜索树
 

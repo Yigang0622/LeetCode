@@ -1,26 +1,21 @@
-from jianzhi_offer.tree.common import *
+from common.treeCommon import *
 
 
 class Solution:
 
-    depth = 0
-
-
     def isSymmetric(self, root: TreeNode) -> bool:
-        self.depth = 0
-        self.iterTree(root, 0)
-        print('final', self.depth)
+        return self.isTwoNodeSymmetric(root, root)
 
-    def iterTree(self, node: TreeNode, depth):
-        self.depth = depth
-        if node:
-            self.depth += 1
-            self.iterTree(node.left, depth + 1)
-            print(node.val)
-            self.iterTree(node.right, depth + 1)
+    def isTwoNodeSymmetric(self, left: TreeNode, right: TreeNode) -> bool:
+        if left is None and right is None:
+            return True
+        if left is None or right is None:
+            return False
+        return left.val == right.val and self.isTwoNodeSymmetric(left.left, right.right) and self.isTwoNodeSymmetric(left.right, right.left)
 
 
-arr = [1, 2, 2, None, 3, None, 3]
+
+arr = [1,2,2,3,4,4,3]
 root = genTree(arr)
 s = Solution().isSymmetric(root)
 print('ans', s)
