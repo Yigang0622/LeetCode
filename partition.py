@@ -12,18 +12,16 @@ class Solution:
 
     def trace_back(self, start, s, path, answers):
         if start == len(s):
-            a = path[:]
-            answers.append(a)
+            answers.append(path[:])
             return
 
         for i in range(start, len(s)+1):
             sub_str = s[start:i+1]
-            print(sub_str)
-            if self.isPalindromic(sub_str) is False:
-                break
-            path.append(sub_str)
-            self.trace_back(i + 1, s, path, answers)
-            path.pop()
+
+            if self.isPalindromic(sub_str):
+                path.append(sub_str)
+                self.trace_back(i + 1, s, path, answers)
+                path.pop()
 
     def isPalindromic(self, str):
         length = len(str)
