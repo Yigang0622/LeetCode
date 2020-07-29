@@ -14,6 +14,8 @@ def genTree(arr: List[int]):
     root = addNode(0, arr)
     return root
 
+def test_tree():
+    return genTree([1,2,3,4,5,6,7])
 
 def addNode(i, arr):
     node = TreeNode(arr[i])

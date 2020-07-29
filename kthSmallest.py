@@ -1,28 +1,18 @@
-# LeetCode
-# kthSmallest 
-# Created by Yigang Zhou on 2020/7/26.
-# Copyright © 2020 Yigang Zhou. All rights reserved.
-from typing import List
-import collections
+from common.treeCommon import *
+
 
 class Solution:
-    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
-        if len(matrix) == 0:
-            return 0
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        arr = []
+        self.dfs(root, arr)
+        return arr[k-1]
 
-        n = len(matrix)
-        i = int((k - 1)/n)
-        j = (k-1)%n
-        print(i,j)
-        print(matrix[i][j])
-        return matrix[i][j]
+    def dfs(self, node: TreeNode, result):
+        if node is None:
+            return
+        self.dfs(node.left, result)
+        result.append(node.val)
+        self.dfs(node.right, result)
 
-
-
-matrix = [
-   [ 1,  5,  9],
-   [10, 11, 13],
-   [12, 13, 15]
-]
-k = 8
-s = Solution().kthSmallest(matrix,k)
+root = genTree([5,3,6,2,4,None,None,1])
+Solution().kthSmallest(root,3)
