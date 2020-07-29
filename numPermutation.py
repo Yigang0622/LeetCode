@@ -22,6 +22,6 @@ class Solution:
                     self.dfs(a, possible_choice, target_len, answer)
 
 
-s = Solution().permute([1,2,3,4])
-
+s = Solution().permute([1,2,3])
+print(s)
 
