@@ -1,17 +1,19 @@
 from typing import List
 from common.arrayCommon import *
 
+# https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/51/dynamic-programming/104/
+
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
-        n = len(nums)
-        dp = [[0 for _ in range(n)] for _ in range(n)]
-        print(nums)
-        print2DArray(dp)
-        for i in range(n):
-            for j in range(i):
-                dp[i][j] = j - i == nums[i]
-        print2DArray(dp)
+
+        right_most_pos = 0
+        for i, step in enumerate(nums):
+            max_pos = max(right_most_pos, i + step)
+            if right_most_pos >= i and max_pos > right_most_pos:
+                right_most_pos = max_pos
+        return right_most_pos >= len(nums) - 1
 
 
-arr = [2,3,1,1,4]
+arr = [0, 1]
 r = Solution().canJump(arr)
+print(r)
