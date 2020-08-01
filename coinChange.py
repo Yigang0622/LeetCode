@@ -1,14 +1,8 @@
-# LeetCode
-# coinChange 
-# Created by Yigang Zhou on 2020/8/1.
-# Copyright © 2020 Yigang Zhou. All rights reserved.
 from typing import List
-
-
-# 零钱兑换
-# https://leetcode-cn.com/leetbook/read/top-interview-questions-medium/xvf0kh/
+# https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/51/dynamic-programming/106/
 
 class Solution:
+
     should_stop = False
 
     def coinChange(self, coins: List[int], amount: int) -> int:
@@ -41,8 +35,7 @@ class Solution:
             self.search(current, available_coins, target - each, ans)
             current.pop()
 
+coins = [5,1]
+amount = 99
 
-coins = [5,3,6,1]
-amount = 10
 r = Solution().coinChange(coins, amount)
-print(r)

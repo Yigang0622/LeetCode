@@ -1,4 +1,4 @@
-from jianzhi_offer.linkedList.common import *
+from common.linkedListCommon import *
 # 环形链表
 
 class Solution(object):
