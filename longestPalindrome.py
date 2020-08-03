@@ -23,7 +23,6 @@ class Solution:
 
 
     def calLongestPalindrome(self,s,i,j):
-
         while i >= 1 and j < len(s) - 1:
             if s[i-1] != s[j+1]:
                 return s[i:j+1]
