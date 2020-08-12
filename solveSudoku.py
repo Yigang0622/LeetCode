@@ -37,13 +37,14 @@ class Solution:
         if len(possible_nums) == 0:
             print('should return')
             return
+
         for each in possible_nums:
-            b = copy.deepcopy(current_board)
-            b[y][x] = each
-            self.search(b, coords_to_solve, i+1)
+            print('each', each)
+            current_board[y][x] = each
+            self.search(current_board, coords_to_solve, i+1)
             # 回退
-            # current_board[y][x] = 0
-            # i = i - 1
+            current_board[y][x] = 0
+            i -= 1
 
     def possible_num_for_position(self, board, i, j):
         choices = {1, 2, 3, 4, 5, 6, 7, 8, 9}
