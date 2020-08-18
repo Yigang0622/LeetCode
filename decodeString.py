@@ -18,9 +18,9 @@ class Solution:
                 buffer = ''
                 temp = ''
                 while stack[-1] != '[':
-                    temp =  stack.pop() + temp
+                    temp = stack.pop() + temp
                 stack.pop()
-                stack.append(int(stack.pop())*temp)
+                stack.append(int(stack.pop()) * temp)
             else:
                 if each.isdigit() and buffer.isdigit():
                     buffer += each

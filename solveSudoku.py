@@ -4,7 +4,12 @@ from typing import List
 import common.arrayCommon as Array
 import copy
 
+
 class Solution:
+
+    solved = False
+    solution = List[List[str]]
+
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
@@ -15,36 +20,38 @@ class Solution:
         coords_to_solve = []
         for i in range(9):
             for j in range(9):
-                if m[i][j] == '.':
+                if board[i][j] == '.':
                     coords_to_solve.append((i, j))
                 else:
-                    num_board[i][j] = int(m[i][j])
-        print(coords_to_solve)
-        Array.print2DArray(num_board)
-        self.search(num_board, coords_to_solve, 0)
-        # Array.print2DArray(num_board)
+                    num_board[i][j] = int(board[i][j])
 
-    def search(self, current_board, coords_to_solve, i):
-        print(i)
-        if i == len(coords_to_solve):
-            print('done')
-            Array.print2DArray(current_board)
+        self.search(num_board, coords_to_solve)
+        for i in range(9):
+            for j in range(9):
+                board[i][j] = str(self.solution[i][j])
+        Array.print2DArray(self.solution)
+
+    def search(self, current_board, coords_to_solve):
+        if self.solved:
             return
 
-        y, x = coords_to_solve[i]
-        possible_nums = self.possible_num_for_position(current_board, y, x)
+        if len(coords_to_solve) == 0:
+            print('Solved:')
+            self.solution = current_board
+            self.solved = True
+            return
+
+        q = copy.deepcopy(coords_to_solve)
+        y, x = q.pop()
+        c = copy.deepcopy(current_board)
+        possible_nums = self.possible_num_for_position(c, y, x)
 
         if len(possible_nums) == 0:
-            print('should return')
             return
 
         for each in possible_nums:
-            print('each', each)
-            current_board[y][x] = each
-            self.search(current_board, coords_to_solve, i+1)
-            # 回退
-            current_board[y][x] = 0
-            i -= 1
+            c[y][x] = each
+            self.search(c, q)
 
     def possible_num_for_position(self, board, i, j):
         choices = {1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -61,18 +68,28 @@ class Solution:
         x = i // 3 * 3
         for i_block in range(3):
             for j_block in range(3):
-                if board[i_block + y][j_block + x] in choices:
-                    choices.remove(board[i_block + y][j_block + x])
+                if board[i_block + x][j_block + y] in choices:
+                    choices.remove(board[i_block + x][j_block + y])
         return list(choices)
 
 
-m = [["5", "3", ".", ".", "7", ".", ".", ".", "."],
-     ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-     [".", "9", "8", ".", ".", ".", ".", "6", "."],
-     ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-     ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
-     ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-     [".", "6", ".", ".", ".", ".", "2", "8", "."],
-     [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-     [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+# m = [["5", "3", ".", ".", "7", ".", ".", ".", "."],
+#      ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+#      [".", "9", "8", ".", ".", ".", ".", "6", "."],
+#      ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+#      ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+#      ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+#      [".", "6", ".", ".", ".", ".", "2", "8", "."],
+#      [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+#      [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+
+m = [['.', ".", ".", "2", ".", ".", ".", "6", "3"],
+      ["3", ".", ".", ".", ".", "5", "4", ".", "1"],
+      [".", ".", "1", ".", ".", "3", "9", "8", "."],
+      [".", ".", ".", ".", ".", ".", ".", "9", "."],
+      [".", ".", ".", "5", "3", "8", ".", ".", "."],
+      [".", "3", ".", ".", ".", ".", ".", ".", "."],
+      [".", "2", "6", "3", ".", ".", "5", ".", "."],
+      ["5", ".", "3", "7", ".", ".", ".", ".", "8"],
+      ["4", "7", ".", ".", ".", "1", ".", ".", "."]]
 Solution().solveSudoku(m)
