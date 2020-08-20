@@ -14,8 +14,9 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        Array.print2DArray(board)
-        num_board = [[0 for _ in range(9)] for _ in range(9)]
+
+        # Array.print2DArray(board)
+        num_board = [[0]*9 for _ in range(9)]
 
         coords_to_solve = []
         for i in range(9):
@@ -29,7 +30,7 @@ class Solution:
         for i in range(9):
             for j in range(9):
                 board[i][j] = str(self.solution[i][j])
-        Array.print2DArray(self.solution)
+        # Array.print2DArray(self.solution)
 
     def search(self, current_board, coords_to_solve):
         if self.solved:
@@ -92,4 +93,7 @@ m = [['.', ".", ".", "2", ".", ".", ".", "6", "3"],
       [".", "2", "6", "3", ".", ".", "5", ".", "."],
       ["5", ".", "3", "7", ".", ".", ".", ".", "8"],
       ["4", "7", ".", ".", ".", "1", ".", ".", "."]]
-Solution().solveSudoku(m)
+
+Array.print2DArray(m)
+r = Solution().solveSudoku(m)
+Array.print2DArray(m)
