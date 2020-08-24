@@ -33,7 +33,7 @@ class Solution:
     def heap_sort(self, heap, n, kth):
         self.build_heap(heap, n)
         print('Heap:', heap)
-        for i in range(n - 1, n - k - 1, -1):
+        for i in range(n - 1, n - kth - 1, -1):
             self.swap(heap, i, 0)
             print(heap)
             self.heapify(heap, i, 0)
@@ -46,3 +46,4 @@ class Solution:
 nums = [3,2,1,5,6,4]
 k = 2
 r = Solution().findKthLargest(nums, k)
+print(r)
