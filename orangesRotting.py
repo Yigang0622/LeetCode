@@ -17,6 +17,7 @@ class Solution:
 
         time = 0
         while(q):
+            print(q)
             for _ in range(len(q)):
                 i, j = q.popleft()
                 grid[i][j] = 2
@@ -36,7 +37,7 @@ class Solution:
         if time == 0:
             return 0
         else:
-            return time - 1
+            return time - 11
 
 
 
