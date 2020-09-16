@@ -9,6 +9,9 @@ from typing import List
 
 
 class Solution:
+
+    solved = False
+
     def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
         next = {}
         for each in allowed:
@@ -18,9 +21,15 @@ class Solution:
                 next[k].append(v)
             else:
                 next[k] = [v]
-        self.get_next_level(bottom, next)
+        self.solve(bottom, next)
+        return self.solved
 
-    def get_next_level(self, bottom, next):
+    def solve(self, bottom, next):
+        if self.solved:
+            return
+        if len(bottom) == 1:
+            self.solved = True
+            return
         next_bottom = []
         for i in range(1,len(bottom)):
             k = bottom[i-1]+bottom[i]
@@ -28,11 +37,12 @@ class Solution:
                 next_bottom.append(next[k])
             else:
                 next_bottom.append([])
-        print(next_bottom)
-        ans = []
-        self.dfs_bottoms([],0,next_bottom,ans)
-        print(ans)
-        return ans
+        bottoms = []
+        self.dfs_bottoms([], 0, next_bottom, bottoms)
+        for each in bottoms:
+            if len(each):
+                self.solve(each, next)
+        return bottoms
 
     def dfs_bottoms(self, curr,i, next_bottom_arr, ans):
         if len(next_bottom_arr) == i:
