@@ -8,20 +8,19 @@ class Solution:
 
         i_1 = -1
         i_2 = -1
-
+        ans = float('inf')
         for i in range(len(words)):
             w = words[i]
             if w == word1:
+                i_1 = i
                 if i_2 != -1:
-                    return abs(i_2 - i)
-                else:
-                    i_1 = i
+                    ans = min(ans, abs(i_1 - i_2))
             if w == word2:
+                i_2 = i
                 if i_1 != -1:
-                    return abs(i_1 - i)
-                else:
-                    i_2 = i
-        return -1
+                    ans = min(ans, abs(i_1 - i_2))
+
+        return ans
 
 
 words = ["I","am","a","student","from","a","university","in","a","city"]
