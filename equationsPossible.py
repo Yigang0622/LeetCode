@@ -8,63 +8,54 @@
 from typing import List
 
 
+class UnionFind:
+
+    def __init__(self):
+        self.parent = [-1] * 26
+
+    def find_parent(self, n):
+        if self.parent[n] == -1:
+            return n
+        return self.find_parent(self.parent[n])
+
+    def union(self, n1, n2):
+        p_1 = self.find_parent(n1)
+        p_2 = self.find_parent(n2)
+        if p_1 == p_2:
+            return -1
+        else:
+            self.parent[p_1] = p_2
+            return p_2
+
+
 class Solution:
 
     def equationsPossible(self, equations: List[str]) -> bool:
-        self.val_dict = dict()
-        self.val_count = 0
+        unionFind = UnionFind()
 
-        for each in equations:
-            print(self.val_dict)
+        # 排序 == 先 ！= 后
+        equations_sorted = [x for x in equations if x[1:3] == '=='] + [x for x in equations if x[1:3] == '!=']
+        # print(equations_sorted)
+        for each in equations_sorted:
             e1 = each[0]
             e2 = each[3]
             equality = each[1:3]
-            print('->',e1,equality,e2)
+            # print('->', e1, equality, e2)
+            e1_num = ord(e1) - 97
+            e2_num = ord(e2) - 97
             if equality == '==':
-
-                if e1 not in self.val_dict and e2 not in self.val_dict:
-                    self.assignSameValue(e1, e2)
-                if e1 not in self.val_dict:
-                    self.val_dict[e1] = self.val_dict[e2]
-                if e2 not in self.val_dict:
-                    self.val_dict[e2] = self.val_dict[e1]
-                if e1 in self.val_dict and e2 in self.val_dict:
-                    if self.val_dict[e1] != self.val_dict[e2]:
-                        return False
+                unionFind.union(e1_num, e2_num)
 
             if equality == '!=':
-                if e1 not in self.val_dict and e2 not in self.val_dict:
-                    if e1 != e2:
-                        self.assignDifferentValue(e1)
-                        self.assignDifferentValue(e2)
-                    else:
-                        self.assignDifferentValue(e1)
-
-                if e1 not in self.val_dict:
-                    self.assignDifferentValue(e1)
-                if e2 not in self.val_dict:
-                    self.assignDifferentValue(e2)
-                if e1 in self.val_dict and e2 in self.val_dict:
-                    if self.val_dict[e1] == self.val_dict[e2]:
-                        return False
+                p1 = unionFind.find_parent(e1_num)
+                p2 = unionFind.find_parent(e2_num)
+                if p1 == p2:
+                    # print('p1 == p2')
+                    return False
 
         return True
 
-    def assignSameValue(self,k1,k2):
-        self.val_dict[k1] = self.val_count
-        self.val_dict[k2] = self.val_count
-        print(k1,'set to', self.val_count)
-        print(k2,'set to', self.val_count)
-        self.val_count += 1
 
-    def assignDifferentValue(self, k):
-        if k in self.val_dict:
-            print(k,self.val_dict[k])
-            return self.val_dict[k]
-        print(k,'set to', self.val_count)
-        self.val_dict[k] = self.val_count
-        self.val_count += 1
-
-equations = ["c==c","f!=a","f==b","b==c"]
+equations = ["a==b","b!=c","c==a"]
 r = Solution().equationsPossible(equations)
 print(r)

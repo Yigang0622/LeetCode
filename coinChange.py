@@ -1,41 +1,25 @@
 from typing import List
+
+
 # https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/51/dynamic-programming/106/
 
 class Solution:
 
-    should_stop = False
-
     def coinChange(self, coins: List[int], amount: int) -> int:
 
-        if amount == 0:
-            return 0
-
-        self.should_stop = False
-        coins = sorted(coins, reverse=True)
-        ans = []
-        self.search([], coins, amount, ans)
-        print(ans)
-        if len(ans) == 0:
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+        for i in range(1, amount+1):
+            min_num = amount + 1
+            for coin in coins:
+                if i - coin >= 0:
+                    min_num = min(min_num, dp[i-coin] + 1)
+            dp[i] = min_num
+        if dp[-1] == amount + 1:
             return -1
-        else:
-            return len(ans)
+        return dp[-1]
 
-    def search(self, current, available_coins, target, ans):
-        if self.should_stop:
-            return
-
-        if target <= 0:
-            if target == 0:
-                self.should_stop = True
-                ans.extend(current)
-            return
-
-        for each in available_coins:
-            current.append(each)
-            self.search(current, available_coins, target - each, ans)
-            current.pop()
-
-coins = [5,1]
-amount = 99
+coins = [2]
+amount = 3
 
 r = Solution().coinChange(coins, amount)
