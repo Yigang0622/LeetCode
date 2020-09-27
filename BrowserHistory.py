@@ -3,20 +3,33 @@
 
 class BrowserHistory:
 
-
     def __init__(self, homepage: str):
-        self.history = [homepage]
+        self.history = [''] * 5000
+        self.history[0] = homepage
         self.idx = 0
+        self.top = 0
 
     def visit(self, url: str) -> None:
-        self.history.append(url)
         self.idx += 1
+        self.history[self.idx] = url
+        self.top = self.idx
 
     def back(self, steps: int) -> str:
-        pass
+        if steps >= self.idx:
+            self.idx = 0
+        else:
+            self.idx -= steps
+        return self.history[self.idx]
 
     def forward(self, steps: int) -> str:
-        pass
+
+        if self.idx + steps <= self.top:
+            self.idx = self.idx + steps
+            return self.history[self.idx]
+        else:
+            self.idx = self.top
+            return self.history[self.idx]
+
 
 
 
