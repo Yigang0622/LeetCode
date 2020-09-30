@@ -10,21 +10,21 @@ from typing import List
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
         p_vec = self.to_vector(p)
-        # print(p_vec)
+        s_vec = self.to_vector(s[0: len(p) - 1])
+        # print(s_vec, p_vec)
         i = 0
-        j = len(p) - 1
-        # print(s)
         ans = []
-        while j < len(s):
-            word = s[i:j + 1]
-            # print(word)
-            equal, offset = self.compare(p_vec, word)
-            if equal:
+        for j in range(len(p) - 1, len(s)):
+            s_vec[ord(s[j]) - ord('a')] += 1
+            if p_vec == s_vec:
+                # print(i)
                 ans.append(i)
-            i += offset
-            j += offset
+            s_vec[ord(s[i]) - ord('a')] -= 1
+            i += 1
         return ans
 
+
+    # 用不到
     def compare(self, p_vec, word):
         d = dict()
         for i, c in enumerate(word):
@@ -41,20 +41,21 @@ class Solution:
         return p_vec == d, 1
 
     def to_vector(self, word):
-        d = dict()
-        for each in word:
-            if each in d:
-                d[each] += 1
-            else:
-                d[each] = 1
-        return d
-
-        # vec = [0] * 26
+        # d = dict()
         # for each in word:
-        #    vec[ord(each) - ord('a')] += 1
-        # return vec
+        #     if each in d:
+        #         d[each] += 1
+        #     else:
+        #         d[each] = 1
+        # return d
 
-s = "cbaebabacd"
-p = "abc"
+        vec = [0] * 26
+        for each in word:
+           vec[ord(each) - ord('a')] += 1
+        return vec
+
+s = "abab"
+p = "ab"
+print(s)
 r = Solution().findAnagrams(s, p)
 print(r)
