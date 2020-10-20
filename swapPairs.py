@@ -8,23 +8,18 @@ from common.linkedListCommon import *
 
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        printLinkedList(head)
-        x = head.next
+        dummy = ListNode(0)
+        dummy.next = head
+        cur = dummy
+        while cur.next and cur.next.next:
+            n1 = cur.next
+            n2 = cur.next.next
+            cur.next = n2
+            n1.next = n2.next
+            n2.next = n1
+            cur = n1
 
-        cur = head
-        while cur:
-            print('!')
-            temp = cur.next
-            cur.next = temp.next
-            temp.next = cur
-            printLinkedList(temp)
-
-            cur = cur.next
-
-
-        printLinkedList(x)
-
-        return head
+        return dummy.next
 
 
 head = generateLinkedList([1,2,3,4])
