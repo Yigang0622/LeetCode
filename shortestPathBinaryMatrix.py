@@ -8,7 +8,9 @@
 from typing import List
 import collections
 
+
 class Solution:
+
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         # print(grid)
         N = len(grid)
