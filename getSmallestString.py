@@ -7,6 +7,7 @@
 # https://leetcode-cn.com/problems/smallest-string-with-a-given-numeric-value/
 import collections
 
+
 class Solution:
     def getSmallestString(self, n: int, k: int) -> str:
         alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
@@ -20,7 +21,7 @@ class Solution:
             while k - right_most < n_left - 1:
                 right_most -= 1
             # print(alphabet[right_most-1])
-            q.appendleft(alphabet[right_most-1])
+            q.appendleft(alphabet[right_most - 1])
             k -= right_most
             n_left -= 1
 
@@ -38,6 +39,7 @@ class Solution:
         # else:
         #     print(['a'] * (n_left))
         return ''.join(q)
+
 
 n = 97961
 k = 2516030
