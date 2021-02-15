@@ -18,11 +18,13 @@ class Solution:
                     s.append(each)
                 else:
                     s.append(each)
-
+        # 防止数列一直单调递增
+        if k != 0:
+            s = s[:-k]
         return str(int(''.join(s)))
 
 
-num = "10200"
+num = "112"
 k = 1
 ans = Solution().removeKdigits(num, k)
 print(ans)
